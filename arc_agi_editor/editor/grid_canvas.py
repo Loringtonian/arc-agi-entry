@@ -32,7 +32,7 @@ class GridCanvas(Canvas):
         canvas_height = grid.height * cell_size
         
         super().__init__(parent, width=canvas_width, height=canvas_height, 
-                         bg="white", highlightthickness=2, highlightbackground="black")
+                         bg="lightgray", highlightthickness=2, highlightbackground="black")
         
         # Bind mouse events
         self.bind("<Button-1>", self._on_click)
@@ -60,13 +60,13 @@ class GridCanvas(Canvas):
         for x in range(self.grid.width + 1):
             x_pos = x * self.cell_size
             self.create_line(x_pos, 0, x_pos, self.grid.height * self.cell_size, 
-                           fill="gray", width=1, tags="gridline")
+                           fill="black", width=1, tags="gridline")
         
         # Horizontal lines
         for y in range(self.grid.height + 1):
             y_pos = y * self.cell_size
             self.create_line(0, y_pos, self.grid.width * self.cell_size, y_pos, 
-                           fill="gray", width=1, tags="gridline")
+                           fill="black", width=1, tags="gridline")
     
     def _draw_cells(self):
         """Draw all cells with their current colors."""
@@ -93,9 +93,15 @@ class GridCanvas(Canvas):
         x2 = (x + 1) * self.cell_size - 1
         y2 = (y + 1) * self.cell_size - 1
         
-        # Draw cell rectangle
-        self.create_rectangle(x1, y1, x2, y2, fill=color, outline="", 
-                            tags=f"cell_{x}_{y}")
+        # Draw cell rectangle with a border to make it visible
+        if cell_value == 0:
+            # For black cells, use a slightly different shade with visible border
+            self.create_rectangle(x1, y1, x2, y2, fill=color, outline="gray", width=1,
+                                tags=f"cell_{x}_{y}")
+        else:
+            # For other colors, use the actual color
+            self.create_rectangle(x1, y1, x2, y2, fill=color, outline="darkgray", width=1,
+                                tags=f"cell_{x}_{y}")
     
     def _pixel_to_cell(self, pixel_x: int, pixel_y: int) -> Optional[Tuple[int, int]]:
         """Convert pixel coordinates to cell coordinates.

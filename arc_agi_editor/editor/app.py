@@ -24,12 +24,21 @@ class ARCEditorApp:
         self.root.title("ARC AGI Editor")
         self.root.geometry("800x600")
         
+        # Ensure window gets focus when launched
+        self.root.lift()
+        self.root.focus_force()
+        self.root.attributes('-topmost', True)
+        self.root.after(100, lambda: self.root.attributes('-topmost', False))
+        
         # Application state
         self.current_file = None
         self.grid = Grid()  # Default 8x8 grid
         self.current_color = 0
         self.current_tool = "paint"
         self.task_data = create_empty_task()
+        
+        # Add some sample content to show the grid is working
+        self._add_sample_content()
         
         # Create UI components
         self._create_menu()
@@ -38,6 +47,24 @@ class ARCEditorApp:
         
         # Update status
         self._update_status()
+    
+    def _add_sample_content(self):
+        """Add some sample content to demonstrate the grid is working."""
+        # Create a simple pattern to show the grid is functional
+        self.grid.set(1, 1, 1)  # Blue
+        self.grid.set(2, 1, 2)  # Red
+        self.grid.set(3, 1, 3)  # Green
+        self.grid.set(4, 1, 4)  # Yellow
+        self.grid.set(5, 1, 5)  # Gray
+        self.grid.set(6, 1, 6)  # Magenta
+        
+        # Add a border pattern
+        for x in range(self.grid.width):
+            self.grid.set(x, 0, 7)  # Orange border
+            self.grid.set(x, self.grid.height-1, 7)  # Orange border
+        for y in range(self.grid.height):
+            self.grid.set(0, y, 7)  # Orange border
+            self.grid.set(self.grid.width-1, y, 7)  # Orange border
         
     def _create_menu(self):
         """Create the menu bar."""
@@ -115,9 +142,6 @@ class ARCEditorApp:
         canvas_frame = tk.Frame(right_panel)
         canvas_frame.pack(fill=tk.BOTH, expand=True)
         
-        # Create scrollable canvas container
-        self.canvas_container = tk.Frame(canvas_frame)
-        
         # Scrollbars
         v_scrollbar = tk.Scrollbar(canvas_frame, orient=tk.VERTICAL)
         h_scrollbar = tk.Scrollbar(canvas_frame, orient=tk.HORIZONTAL)
@@ -138,19 +162,22 @@ class ARCEditorApp:
         h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
         self.scroll_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Grid canvas
+        # Grid canvas - embed directly in scroll canvas
         self.grid_canvas = GridCanvas(
-            self.canvas_container,
+            self.scroll_canvas,
             self.grid,
             cell_size=30,
             on_cell_change=self._on_cell_change
         )
-        self.grid_canvas.pack()
         
-        # Add canvas container to scroll canvas
-        self.scroll_canvas.create_window((0, 0), window=self.canvas_container, anchor="nw")
-        self.canvas_container.update_idletasks()
-        self.scroll_canvas.configure(scrollregion=self.scroll_canvas.bbox("all"))
+        # Add grid canvas to scroll canvas
+        self.scroll_canvas.create_window(10, 10, window=self.grid_canvas, anchor="nw")
+        
+        # Configure scroll region
+        self.grid_canvas.update_idletasks()
+        canvas_width = self.grid_canvas.winfo_reqwidth()
+        canvas_height = self.grid_canvas.winfo_reqheight()
+        self.scroll_canvas.configure(scrollregion=(0, 0, canvas_width + 20, canvas_height + 20))
         
         # Bind additional canvas events
         self.grid_canvas.bind_mouse_release(self._on_mouse_release)
@@ -356,8 +383,10 @@ class ARCEditorApp:
     
     def _update_canvas_scroll(self):
         """Update the scroll region for the canvas."""
-        self.canvas_container.update_idletasks()
-        self.scroll_canvas.configure(scrollregion=self.scroll_canvas.bbox("all"))
+        self.grid_canvas.update_idletasks()
+        canvas_width = self.grid_canvas.winfo_reqwidth()
+        canvas_height = self.grid_canvas.winfo_reqheight()
+        self.scroll_canvas.configure(scrollregion=(0, 0, canvas_width + 20, canvas_height + 20))
     
     def _game_mode_placeholder(self):
         """Placeholder for game mode."""

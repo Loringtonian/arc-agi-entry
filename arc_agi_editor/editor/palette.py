@@ -263,7 +263,7 @@ class ToolPalette(tk.Frame):
         """Update the visual selection of the current tool."""
         # Reset all buttons
         for button in self.tool_buttons.values():
-            button.config(relief="raised", bg="SystemButtonFace")
+            button.config(relief="raised", bg="lightgray")
         
         # Highlight current selection
         if self.current_tool in self.tool_buttons:
