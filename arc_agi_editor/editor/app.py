@@ -8,6 +8,7 @@ from tkinter import ttk, messagebox, filedialog
 from typing import Optional
 import os
 import json
+import sys
 
 from .grid_model import Grid
 from .grid_canvas import GridCanvas
@@ -24,6 +25,20 @@ class ARCEditorApp:
         self.root.title("ARC AGI Editor")
         self.root.geometry("800x600")
         
+        # Window management - bring to front and focus
+        self.root.lift()
+        self.root.attributes('-topmost', True)
+        self.root.after(100, lambda: self.root.attributes('-topmost', False))
+        self.root.focus_force()
+        
+        # Center the window on screen
+        self.root.update_idletasks()
+        width = self.root.winfo_width()
+        height = self.root.winfo_height()
+        x = (self.root.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.root.winfo_screenheight() // 2) - (height // 2)
+        self.root.geometry(f"{width}x{height}+{x}+{y}")
+        
         # Application state
         self.current_file = None
         self.grid = Grid()  # Default 8x8 grid
@@ -36,8 +51,14 @@ class ARCEditorApp:
         self._create_widgets()
         self._bind_events()
         
-        # Update status
+        # Update status and ensure everything is rendered
         self._update_status()
+        self.root.update()
+        
+        # Debug output
+        print("ARC AGI Editor initialized successfully")
+        print(f"Window size: {self.root.winfo_width()}x{self.root.winfo_height()}")
+        print(f"Grid size: {self.grid.width}x{self.grid.height}")
         
     def _create_menu(self):
         """Create the menu bar."""
@@ -82,41 +103,45 @@ class ARCEditorApp:
     
     def _create_widgets(self):
         """Create the main widgets."""
+        print("Creating widgets...")
+        
         # Main frame
         main_frame = tk.Frame(self.root)
         main_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # Left panel for tools and palette
-        left_panel = tk.Frame(main_frame, width=200)
+        left_panel = tk.Frame(main_frame, width=200, bg="#f0f0f0")
         left_panel.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 10))
         left_panel.pack_propagate(False)
         
         # Color palette
+        print("Creating color palette...")
         self.color_palette = ColorPalette(left_panel, on_color_change=self._on_color_change)
         self.color_palette.pack(pady=(0, 10))
         
         # Tool palette
+        print("Creating tool palette...")
         self.tool_palette = ToolPalette(left_panel, on_tool_change=self._on_tool_change)
         self.tool_palette.pack(pady=(0, 10))
         
         # Grid info
-        info_frame = tk.Frame(left_panel)
+        info_frame = tk.Frame(left_panel, bg="#f0f0f0")
         info_frame.pack(fill=tk.X, pady=(0, 10))
         
-        tk.Label(info_frame, text="Grid Info", font=("Arial", 10, "bold")).pack()
-        self.grid_info_label = tk.Label(info_frame, text=f"{self.grid.width}×{self.grid.height}")
+        tk.Label(info_frame, text="Grid Info", font=("Arial", 10, "bold"), bg="#f0f0f0").pack()
+        self.grid_info_label = tk.Label(info_frame, text=f"{self.grid.width}×{self.grid.height}", bg="#f0f0f0")
         self.grid_info_label.pack()
         
         # Right panel for canvas
-        right_panel = tk.Frame(main_frame)
+        right_panel = tk.Frame(main_frame, bg="#ffffff")
         right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
         
         # Canvas frame with scrollbars
-        canvas_frame = tk.Frame(right_panel)
+        canvas_frame = tk.Frame(right_panel, bg="#ffffff")
         canvas_frame.pack(fill=tk.BOTH, expand=True)
         
         # Create scrollable canvas container
-        self.canvas_container = tk.Frame(canvas_frame)
+        self.canvas_container = tk.Frame(canvas_frame, bg="#ffffff")
         
         # Scrollbars
         v_scrollbar = tk.Scrollbar(canvas_frame, orient=tk.VERTICAL)
@@ -139,6 +164,7 @@ class ARCEditorApp:
         self.scroll_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
         # Grid canvas
+        print("Creating grid canvas...")
         self.grid_canvas = GridCanvas(
             self.canvas_container,
             self.grid,
@@ -165,6 +191,12 @@ class ARCEditorApp:
             font=("Arial", 9)
         )
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+        
+        # Force update to ensure everything is rendered
+        self.root.update_idletasks()
+        self.root.update()
+        
+        print("Widgets created successfully")
     
     def _bind_events(self):
         """Bind keyboard events."""
@@ -388,6 +420,7 @@ Shortcuts:
     
     def run(self):
         """Run the application."""
+        print("Starting main loop...")
         self.root.mainloop()
 
 
@@ -472,8 +505,15 @@ class ResizeDialog:
 
 def main():
     """Main entry point."""
-    app = ARCEditorApp()
-    app.run()
+    try:
+        print("Initializing ARC AGI Editor...")
+        app = ARCEditorApp()
+        app.run()
+    except Exception as e:
+        print(f"Error starting application: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
