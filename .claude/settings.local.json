@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(rm:*)",
+      "Bash(source:*)",
+      "Bash(brew install:*)",
+      "Bash(/opt/homebrew/bin/python3.12:*)",
+      "Bash(/opt/homebrew/bin/python3.13:*)",
+      "Bash(chmod:*)",
+      "Bash(touch:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(grep:*)",
+      "Bash(ln:*)",
+      "Bash(\"/Users/lts/Desktop/arc agi entry/color_env/bin/python\" --version)",
+      "Bash(/usr/bin/env python3:*)"
+    ],
+    "deny": []
+  }
+}

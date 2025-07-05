@@ -1,0 +1,64 @@
+# ----- General -----
+.DS_Store
+*.log
+
+# ----- Byte-compiled / optimized / DLL files -----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ----- C extensions -----
+*.so
+
+# ----- Distribution / packaging -----
+.Python
+build/
+dist/
+downloads/
+.eggs/
+*.egg-info/
+*.egg
+wheels/
+share/python-wheels/
+*.manifest
+*.spec
+
+# ----- Virtual environments -----
+venv/
+env/
+.env/
+.env.*
+.color_env/
+
+# ----- Installer logs -----
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ----- Unit test / coverage -----
+.tox/
+.nox/
+.coverage*
+.cache
+pytest_cache/
+.pytest_cache/
+htmlcov/
+.hypothesis/
+
+# ----- Static type checker / lint caches -----
+.mypy_cache/
+.pyre/
+.dmypy.json
+dmypy.json
+
+# ----- Cython debug symbols -----
+cython_debug/
+
+# ----- Editors / IDEs -----
+.idea/
+.vscode/
+
+# ----- OS specific -----
+Thumbs.db
+
+# ----- Project-specific -----
+archive/ 
