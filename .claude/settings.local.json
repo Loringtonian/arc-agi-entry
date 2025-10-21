@@ -28,7 +28,8 @@
       "WebFetch(domain:three.arcprize.org)",
       "WebFetch(domain:medium.com)",
       "Bash(cat:*)",
-      "Read(//Users/lts/Desktop/**)"
+      "Read(//Users/lts/Desktop/**)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": []
   }

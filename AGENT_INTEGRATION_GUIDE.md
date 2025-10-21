@@ -31,6 +31,29 @@ You can try these at [three.arcprize.org](https://three.arcprize.org) to see wha
 
 ---
 
+## Agent API Specs vs. Game Submission Requirements
+
+**IMPORTANT**: Understanding the difference between what's specified for agents vs. what's required for game submissions.
+
+| Specification | Agent API (docs.arcprize.org) | Game Submission Requirements | Source |
+|---------------|-------------------------------|------------------------------|--------|
+| **Grid Size** | 64×64 maximum (coordinates 0-63) | ❌ Not specified | Agent: docs.arcprize.org/games<br>Game: arcprize.org/arc-agi/3 |
+| **Color Palette** | 16 colors (indices 0-15) | ❌ Not specified | Agent: docs.arcprize.org/games<br>Game: arcprize.org/arc-agi/3 |
+| **Action Framework** | RESET + ACTION1-7 | ❌ Not specified | Agent: docs.arcprize.org<br>Game: arcprize.org/arc-agi/3 |
+| **Coordinate System** | (x,y) format, (0,0) = top-left | ❌ Not specified | Agent: docs.arcprize.org/games<br>Game: arcprize.org/arc-agi/3 |
+| **Game States** | NOT_FINISHED, WIN, GAME_OVER | ❌ Not specified | Agent: docs.arcprize.org/games<br>Game: arcprize.org/arc-agi/3 |
+| **Human Accessibility** | ❌ Not specified for agents | ✅ Learn in <1 min | Game: arcprize.org/arc-agi/3 |
+| **Playability** | ❌ Not specified for agents | ✅ Fun, 5-10 minutes | Game: arcprize.org/arc-agi/3 |
+| **Core Priors Only** | ❌ Not specified for agents | ✅ No language/culture/trivia | Game: arcprize.org/arc-agi/3 |
+| **No Instructions** | ❌ Not specified for agents | ✅ Discoverable through play | Game: arcprize.org/arc-agi/3 |
+
+**Key Takeaway**:
+- **Agent API specs** define how AI agents interact with existing games (grid size, colors, actions)
+- **Game submission requirements** focus on design constraints (human accessibility, no instructions, core priors)
+- **You can submit games without implementing agent API specs** - the foundation will handle integration
+
+---
+
 ## Official Scoring Framework
 
 🔵 **OFFICIAL** - From arcprize.org/blog/arc-agi-3-preview-30-day-learnings

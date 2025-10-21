@@ -195,12 +195,12 @@ mv draft_games/my_game.py good_games/my_game.py
 
 This framework is **100% compliant** with official ARC-AGI-3 specifications.
 
-### Technical Specs ✅
+### Template Features ✅
 
-| Requirement | Status |
-|-------------|--------|
+| Feature | Implementation |
+|---------|----------------|
 | **Grid** | Up to 64×64 cells (square only) ✅ |
-| **Colors** | 16-color official palette (indices 0-15) ✅ |
+| **Colors** | 16-color palette (indices 0-15) ✅ |
 | **Actions** | 7-action framework (RESET + ACTION1-7) ✅ |
 | **Deterministic** | Consistent, predictable behavior ✅ |
 | **No Text** | Pure visual communication ✅ |
@@ -229,8 +229,8 @@ Ready to submit your game to the official benchmark?
 ### Submission Checklist
 
 - [ ] Game follows all design constraints (see `documents/official/DESIGN_CONSTRAINTS.md`)
-- [ ] Uses 16-color palette and 7-action framework
-- [ ] Square grid only (8×8 to 64×64)
+- [ ] Uses 16-color palette and 7-action framework (optional - for agent compatibility)
+- [ ] Square grid only (8×8 to 64×64, optional - from agent specs)
 - [ ] No text during gameplay
 - [ ] Human learnable in <1 minute
 - [ ] Deterministic behavior

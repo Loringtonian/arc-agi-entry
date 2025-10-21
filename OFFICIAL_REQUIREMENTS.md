@@ -222,9 +222,12 @@ The agent API defines:
   - 1st: StochasticGoose (12.58% score)
   - 2nd: Blind Squirrel (6.71% score)
 
-### ARC Prize 2025 (Kaggle Competition)
+### ARC Prize 2025 (Kaggle Competition for AI Agents)
 - **Competition Period**: March 26 - November 3, 2025
-- **Note**: This is for agents, not game submissions
+- **Purpose**: AI agents compete to solve ARC-AGI tasks
+- **⚠️ IMPORTANT**: This is an **agent competition** (for building AI that plays games), NOT related to game submission process
+- **Source**: arcprize.org/competitions/2025
+- **Note**: Game authors should NOT confuse this with the game submission process described above
 
 ### Upcoming
 - **Three private games**: "to be released in coming weeks" (after Aug 19)

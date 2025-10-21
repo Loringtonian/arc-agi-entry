@@ -40,7 +40,7 @@ See also: `documents/official/DESIGN_CONSTRAINTS.md` for official design constra
 - **ABSOLUTELY NO** tutorial text or help messages
 
 ### Color Palette
-🟡 **SPECULATION** - 16-color palette mentioned in agent docs, not explicitly required for game submissions
+🟡 **FROM AGENT API** (not required for game submissions) - 16-color palette from docs.arcprize.org/games
 
 - **Agent API docs mention**: 16 distinct colors (indices 0-15)
 - **Our Current Implementation**: 10 ARC colors (indices 0-9)
@@ -51,7 +51,7 @@ See also: `documents/official/DESIGN_CONSTRAINTS.md` for official design constra
 - **Background**: Typically color 0 (black) for empty/passable space
 
 ### Grid System
-🟡 **PARTIAL SPECULATION** - 64×64 max from agent docs (docs.arcprize.org), other details are inference
+🟡 **FROM AGENT API** (not required for game submissions) - 64×64 max from docs.arcprize.org/games, other details are inference
 
 - **Agent API mentions**: 64×64 maximum grid (coordinates 0-63)
 - **Square grids**: Implied but not explicitly stated as requirement
@@ -91,7 +91,7 @@ See also: `documents/official/DESIGN_CONSTRAINTS.md` for official design constra
 - Purely visual experience
 
 ### Action Space
-🟡 **SPECULATION** - This is the AGENT API framework, NOT a requirement for game submissions
+🟡 **FROM AGENT API** (not required for game submissions) - This is the AGENT API framework from docs.arcprize.org
 
 **Source**: docs.arcprize.org (agent documentation, NOT game submission requirements)
 
