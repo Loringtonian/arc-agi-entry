@@ -15,7 +15,12 @@
       "Bash(ln:*)",
       "Bash(\"/Users/lts/Desktop/arc agi entry/color_env/bin/python\" --version)",
       "Bash(/usr/bin/env python3:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(./game_engine_env/bin/python:*)",
+      "Bash(cp:*)",
+      "Bash(ls:*)",
+      "Bash(./draft_games/shadow_walker.py)",
+      "Bash(./arc_game_template.py)"
     ],
     "deny": []
   }
