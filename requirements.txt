@@ -1,0 +1,22 @@
+# ARC-AGI-3 Game Development Framework - Local Development Requirements
+# Updated: October 2025
+#
+# NOTE: These are requirements for THIS framework's tools (level editor, game template).
+# Official ARC-AGI-3 submission requirements may differ (see documents/official/TECHNICAL_SPECS.md)
+#
+# Official ARC-AGI-3 requirements:
+# - Python 3.10+
+# - pytest (testing)
+# - ruff (linting)
+# - REST API integration (when agent-runnable)
+
+# Local development dependencies (for tools/ and game prototypes)
+pygame==2.6.1   # Level editor and game visualization
+numpy==2.2.6    # Grid operations and rendering
+
+# Development tools (recommended)
+# pytest>=8.0.0  # Uncomment when adding tests
+# ruff>=0.1.0    # Uncomment for linting
+
+# Installation:
+# pip install -r requirements.txt

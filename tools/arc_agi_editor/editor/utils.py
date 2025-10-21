@@ -7,9 +7,11 @@ import json
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 
-# ARC color palette - maps color indices to RGB values
+# ARC-AGI-3 OFFICIAL 16-COLOR PALETTE
+# Updated October 2025 for full ARC-AGI-3 compliance
 ARC_COLORS = {
-    0: (0, 0, 0),        # Black
+    # Original 10 ARC colors (0-9)
+    0: (0, 0, 0),        # Black - Background/Empty
     1: (0, 116, 217),    # Blue
     2: (255, 65, 54),    # Red
     3: (46, 204, 64),    # Green
@@ -19,10 +21,19 @@ ARC_COLORS = {
     7: (255, 133, 27),   # Orange
     8: (127, 219, 255),  # Sky Blue
     9: (135, 12, 37),    # Maroon
+
+    # Extended 6 colors for ARC-AGI-3 (10-15)
+    10: (87, 117, 144),   # Slate Gray
+    11: (255, 195, 160),  # Peach
+    12: (180, 255, 180),  # Light Green
+    13: (255, 255, 200),  # Cream
+    14: (220, 160, 220),  # Lavender
+    15: (160, 220, 255)   # Light Blue
 }
 
-# HTML color codes for web/GUI display
+# HTML color codes for web/GUI display (16 colors)
 ARC_COLOR_CODES = {
+    # Original 10 (0-9)
     0: "#000000",  # Black
     1: "#0074D9",  # Blue
     2: "#FF4136",  # Red
@@ -33,6 +44,14 @@ ARC_COLOR_CODES = {
     7: "#FF851B",  # Orange
     8: "#7FDBFF",  # Sky Blue
     9: "#870C25",  # Maroon
+
+    # Extended 6 (10-15)
+    10: "#577590",  # Slate Gray
+    11: "#FFC3A0",  # Peach
+    12: "#B4FFB4",  # Light Green
+    13: "#FFFFC8",  # Cream
+    14: "#DCA0DC",  # Lavender
+    15: "#A0DCFF"   # Light Blue
 }
 
 
@@ -157,10 +176,10 @@ def _validate_grid_data(grid_data: List[List[int]], context: str) -> None:
         if len(row) != width:
             raise ValueError(f"{context} row {i} has different length than first row")
     
-    # Check all values are valid colors (0-9)
+    # Check all values are valid colors (0-15 for ARC-AGI-3)
     for i, row in enumerate(grid_data):
         for j, value in enumerate(row):
-            if not isinstance(value, int) or not (0 <= value <= 9):
+            if not isinstance(value, int) or not (0 <= value <= 15):
                 raise ValueError(f"{context} contains invalid value {value} at position ({j}, {i})")
 
 
@@ -219,35 +238,35 @@ def add_test_example(task_data: Dict[str, Any], input_grid: List[List[int]], out
 
 def get_color_rgb(color_index: int) -> tuple:
     """Get RGB values for a color index.
-    
+
     Args:
-        color_index: Color index (0-9)
-        
+        color_index: Color index (0-15 for ARC-AGI-3)
+
     Returns:
         RGB tuple (r, g, b)
-        
+
     Raises:
         ValueError: If color index is invalid
     """
-    if not (0 <= color_index <= 9):
-        raise ValueError(f"Color index {color_index} must be between 0-9")
-    
+    if not (0 <= color_index <= 15):
+        raise ValueError(f"Color index {color_index} must be between 0-15")
+
     return ARC_COLORS[color_index]
 
 
 def get_color_hex(color_index: int) -> str:
     """Get hex color code for a color index.
-    
+
     Args:
-        color_index: Color index (0-9)
-        
+        color_index: Color index (0-15 for ARC-AGI-3)
+
     Returns:
         Hex color string (e.g., "#FF0000")
-        
+
     Raises:
         ValueError: If color index is invalid
     """
-    if not (0 <= color_index <= 9):
-        raise ValueError(f"Color index {color_index} must be between 0-9")
-    
+    if not (0 <= color_index <= 15):
+        raise ValueError(f"Color index {color_index} must be between 0-15")
+
     return ARC_COLOR_CODES[color_index]

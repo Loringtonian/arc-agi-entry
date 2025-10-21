@@ -1,7 +1,29 @@
 #!/usr/bin/env python3
 """
-Shadow Walker - ARC AGI Style
-Self-contained, directly runnable game file
+Shadow Walker - ARC-AGI-3 v2.0
+Control a player while avoiding your shadow that follows your movement trail
+
+ARC-AGI-3 Compliance:
+- ✅ 16-color palette (colors 0-15)
+- ✅ Square grid (12×12)
+- ✅ No text during gameplay (pure visual)
+- ✅ Deterministic behavior
+- ✅ 7-action framework compatible
+- ✅ Novel mechanic (shadow trail following)
+
+Game Mechanics:
+- Player (green) moves normally
+- Shadow (maroon) follows player's movement trail with delay
+- Both must reach goal zones (yellow)
+- Avoid:
+  - Hazards (red) kill both
+  - Player and shadow cannot touch
+- Portals (sky blue/magenta) teleport both characters
+
+Controls:
+- WASD/Arrows: Move player
+- R: Reset level
+- ESC: Quit
 """
 
 import sys
@@ -9,35 +31,11 @@ import os
 from typing import List, Tuple, Optional, Dict
 from enum import Enum
 import random
+import pygame
 
-# Try to import pygame, if it fails, try to run with the virtual environment
-try:
-    import pygame
-except ImportError:
-    # Try to run with the virtual environment python
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(script_dir)
-    venv_python = os.path.join(parent_dir, "game_engine_env", "bin", "python")
-    
-    if os.path.exists(venv_python):
-        os.execv(venv_python, [venv_python, __file__] + sys.argv[1:])
-    else:
-        print("Error: pygame not found and virtual environment not available")
-        sys.exit(1)
-
-# ARC color palette (hardcoded)
-ARC_COLORS = {
-    0: (0, 0, 0),        # Black
-    1: (0, 116, 217),    # Blue  
-    2: (255, 65, 54),    # Red
-    3: (46, 204, 64),    # Green
-    4: (255, 220, 0),    # Yellow
-    5: (170, 170, 170),  # Gray
-    6: (240, 18, 190),   # Magenta
-    7: (255, 133, 27),   # Orange
-    8: (127, 219, 255),  # Sky Blue
-    9: (135, 12, 37)     # Maroon
-}
+# Add tools to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
+from arc_agi_editor.editor.utils import ARC_COLORS
 
 class Direction(Enum):
     UP = (0, -1)
@@ -87,7 +85,7 @@ class ShadowWalker:
         self.screen_width = self.grid_size * self.cell_size
         self.screen_height = self.grid_size * self.cell_size
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        pygame.display.set_caption("Shadow Walker")
+        pygame.display.set_caption("Shadow Walker - ARC-AGI-3 v2.0")
         
         # Game state
         self.clock = pygame.time.Clock()

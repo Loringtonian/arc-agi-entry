@@ -1,27 +1,39 @@
-#!/Users/lts/Desktop/arc\ agi\ entry/game_engine_env/bin/python
+#!/usr/bin/env python3
 """
-Simple Frogger - Standalone version
-No external dependencies, just pygame
+River Crossing - ARC-AGI-3 v2.0
+Navigate through moving obstacles to reach the goal
+
+ARC-AGI-3 Compliance:
+- ✅ 16-color palette (colors 0-15)
+- ✅ Square grid (16×16)
+- ✅ No text during gameplay (visual indicators only)
+- ✅ Deterministic behavior
+- ✅ 7-action framework compatible
+- ✅ Generic mechanics (no cultural references)
+
+Game Mechanics:
+- Navigate player (green) through obstacles
+- Road lanes: Avoid moving obstacles (red/blue/gray)
+- Water lanes: Must stay on platforms (orange)
+- Reach goal zone (top green area)
+- Lives shown as colored cells
+
+Controls:
+- WASD/Arrows: Move in 4 directions
+- R: Reset/New level
+- ESC: Quit
 """
 
+import sys
+import os
 import pygame
 import random
 from typing import Dict, List, Tuple, Optional, Any
 from enum import Enum
 
-# ARC color palette (hardcoded)
-ARC_COLORS = {
-    0: (0, 0, 0),        # Black
-    1: (0, 116, 217),    # Blue  
-    2: (255, 65, 54),    # Red
-    3: (46, 204, 64),    # Green
-    4: (255, 220, 0),    # Yellow
-    5: (170, 170, 170),  # Gray
-    6: (240, 18, 190),   # Magenta
-    7: (255, 133, 27),   # Orange
-    8: (127, 219, 255),  # Sky Blue
-    9: (135, 12, 37)     # Maroon
-}
+# Add tools to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
+from arc_agi_editor.editor.utils import ARC_COLORS
 
 class Direction(Enum):
     UP = (0, -1)
@@ -143,7 +155,7 @@ class SimpleFrogger:
         self.screen_width = self.grid_width * self.cell_size + 200
         self.screen_height = self.grid_height * self.cell_size + 100
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        pygame.display.set_caption("Simple Frogger")
+        pygame.display.set_caption("River Crossing - ARC-AGI-3 v2.0")
         
         # Game state
         self.clock = pygame.time.Clock()
@@ -382,35 +394,40 @@ class SimpleFrogger:
         pygame.draw.rect(self.screen, (0, 0, 0), player_rect, 2)  # Black border
     
     def draw_ui(self):
-        """Draw the user interface."""
+        """Draw visual-only UI (NO TEXT - ARC-AGI-3 compliant)."""
         ui_x = self.grid_width * self.cell_size + 10
-        font = pygame.font.Font(None, 24)
-        
-        # Game stats
-        stats = [
-            f"Lives: {self.lives}",
-            f"Score: {self.score}",
-            "",
-            "WASD - Move",
-            "R - Restart", 
-            "ESC - Quit"
-        ]
-        
-        for i, text in enumerate(stats):
-            if text:
-                text_surface = font.render(text, True, (255, 255, 255))
-                self.screen.blit(text_surface, (ui_x, 20 + i * 25))
-        
-        # Game over or win messages
+
+        # Lives indicator - colored cells (green = lives, gray = lost)
+        life_y = 20
+        cell_size = 30
+        for i in range(3):
+            rect = pygame.Rect(ui_x + i * (cell_size + 5), life_y, cell_size, cell_size)
+            if i < self.lives:
+                pygame.draw.rect(self.screen, ARC_COLORS[3], rect)  # Green = alive
+            else:
+                pygame.draw.rect(self.screen, ARC_COLORS[0], rect)  # Black = lost
+            pygame.draw.rect(self.screen, ARC_COLORS[5], rect, 2)  # Gray border
+
+        # Score indicator - vertical bar of colored cells
+        score_cells = min(self.score // 10, 20)  # Up to 20 cells
+        score_y = 80
+        for i in range(score_cells):
+            rect = pygame.Rect(ui_x, score_y + i * 15, 80, 12)
+            pygame.draw.rect(self.screen, ARC_COLORS[4], rect)  # Yellow for score
+
+        # Game over - red flash overlay
         if self.game_over:
-            game_over_text = pygame.font.Font(None, 48).render("GAME OVER", True, (255, 0, 0))
-            text_rect = game_over_text.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
-            self.screen.blit(game_over_text, text_rect)
-        
+            overlay = pygame.Surface((self.screen_width, self.screen_height))
+            overlay.set_alpha(128)
+            overlay.fill(ARC_COLORS[2])  # Red for loss
+            self.screen.blit(overlay, (0, 0))
+
+        # Win - green flash overlay
         elif self.won:
-            win_text = pygame.font.Font(None, 48).render("YOU WIN!", True, (0, 255, 0))
-            text_rect = win_text.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
-            self.screen.blit(win_text, text_rect)
+            overlay = pygame.Surface((self.screen_width, self.screen_height))
+            overlay.set_alpha(128)
+            overlay.fill(ARC_COLORS[3])  # Green for win
+            self.screen.blit(overlay, (0, 0))
     
     def handle_events(self):
         """Handle pygame events."""
@@ -434,29 +451,29 @@ class SimpleFrogger:
     
     def run(self):
         """Main game loop."""
-        print("🐸 Simple Frogger started!")
+        print("🌊 River Crossing started!")
         print("Controls:")
-        print("  WASD or arrows - Move frog")
+        print("  WASD or arrows - Move player")
         print("  R - Restart")
         print("  ESC - Quit")
-        print("Goal: Reach the green zone at the top!")
-        
+        print("Goal: Navigate through obstacles to reach the top!")
+
         while self.running:
             dt = self.clock.tick(self.fps)
-            
+
             self.handle_events()
             self.update(dt)
-            
+
             # Draw everything
             self.screen.fill((0, 0, 0))
             self.draw_grid()
             self.draw_objects()
             self.draw_ui()
-            
+
             pygame.display.flip()
-        
+
         pygame.quit()
-        print("👋 Simple Frogger closed")
+        print("👋 River Crossing closed")
 
 if __name__ == "__main__":
     game = SimpleFrogger()

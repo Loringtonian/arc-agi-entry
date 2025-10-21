@@ -20,7 +20,15 @@
       "Bash(cp:*)",
       "Bash(ls:*)",
       "Bash(./draft_games/shadow_walker.py)",
-      "Bash(./arc_game_template.py)"
+      "Bash(./arc_game_template.py)",
+      "WebSearch",
+      "WebFetch(domain:arcprize.org)",
+      "WebFetch(domain:docs.arcprize.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:three.arcprize.org)",
+      "WebFetch(domain:medium.com)",
+      "Bash(cat:*)",
+      "Read(//Users/lts/Desktop/**)"
     ],
     "deny": []
   }

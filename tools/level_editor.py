@@ -1,8 +1,16 @@
-#!/Users/lts/Desktop/arc\ agi\ entry/game_engine_env/bin/python
+#!/usr/bin/env python3
 """
-Advanced Interactive Game Engine - Complete Pygame Implementation
-A sophisticated game engine that preserves all functionality from the Tkinter editor
-while adding game mechanics capabilities using Pygame + surfarray.
+ARC-AGI-3 Level Editor - Grid Design Tool
+Updated October 2025 for full 16-color compliance
+
+A professional level editor for designing ARC-AGI-3 game grids.
+Features:
+- 16-color palette (ARC-AGI-3 official spec)
+- Grid editing up to 64×64
+- Paint & Fill tools
+- Save/Load in ARC-compatible JSON format
+- Adaptive screen resolution support
+- High-performance rendering with surfarray
 """
 
 import sys
@@ -14,9 +22,10 @@ import math
 from typing import Dict, List, Tuple, Optional, Any
 
 # Add our existing modules to path
-sys.path.insert(0, 'arc_agi_editor')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, script_dir)
 from arc_agi_editor.editor.grid_model import Grid
-from arc_agi_editor.editor.utils import get_color_hex, ARC_COLOR_CODES
+from arc_agi_editor.editor.utils import get_color_hex, ARC_COLOR_CODES, ARC_COLORS
 
 class UIElement:
     """Base class for UI elements."""
@@ -162,7 +171,7 @@ class AdvancedGameEngine:
         
         # Initialize display
         self.screen = pygame.display.set_mode((self.window_width, self.window_height))
-        pygame.display.set_caption("ARC Interactive Game Engine - Advanced")
+        pygame.display.set_caption("ARC-AGI-3 Level Editor v2.0 (16-Color)")
         
         # Colors
         self.BLACK = (0, 0, 0)
@@ -199,12 +208,8 @@ class AdvancedGameEngine:
         self.font_medium = pygame.font.Font(None, 24)
         self.font_small = pygame.font.Font(None, 18)
         
-        # Convert ARC colors to RGB tuples
-        self.arc_colors = {}
-        for color_idx, hex_color in ARC_COLOR_CODES.items():
-            hex_color = hex_color.lstrip('#')
-            rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-            self.arc_colors[color_idx] = rgb
+        # Use ARC-AGI-3 16-color palette
+        self.arc_colors = ARC_COLORS  # Now includes colors 0-15
         
         # UI Elements
         self.ui_elements = []
@@ -214,7 +219,8 @@ class AdvancedGameEngine:
         self.scroll_x = 0
         self.scroll_y = 0
         
-        print("🎮 Advanced Game Engine initialized!")
+        print("🎨 ARC-AGI-3 Level Editor v2.0 initialized!")
+        print(f"✅ 16-color palette loaded (ARC-AGI-3 compliant)")
         print(f"Screen: {self.window_width}x{self.window_height}")
         print(f"Grid: {self.grid.width}x{self.grid.height}, Cell size: {self.cell_size}px")
     
@@ -437,11 +443,11 @@ class AdvancedGameEngine:
         # Title
         title_text = self.font_medium.render("COLOR PALETTE", True, self.BLACK)
         self.screen.blit(title_text, (palette_x, self.palette_label_y))
-        
-        for i in range(10):
-            row = i % 5
-            col = i // 5
-            
+
+        for i in range(16):
+            row = i % 8
+            col = i // 8
+
             x = palette_x + col * (color_size + 3)
             y = palette_y + row * (color_size + 3)
             
@@ -611,14 +617,14 @@ class AdvancedGameEngine:
         palette_x = 20
         palette_y = self.palette_label_y + 30
         color_size = 30
-        
-        for i in range(10):
-            row = i % 5
-            col = i // 5
-            
+
+        for i in range(16):
+            row = i % 8
+            col = i // 8
+
             x = palette_x + col * (color_size + 3)
             y = palette_y + row * (color_size + 3)
-            
+
             if x <= pos[0] <= x + color_size and y <= pos[1] <= y + color_size:
                 self.current_color = i
                 print(f"🎨 Selected color {i}")

@@ -1,27 +1,32 @@
 #!/usr/bin/env python3
 """
-Simple Color Flood - Standalone version
-No external dependencies, just pygame
+Simple Color Flood - ARC-AGI-3 v2.0
+Simplified variant of Color Flood with minimal UI
+
+ARC-AGI-3 Compliance:
+- ✅ 16-color palette (colors 0-15)
+- ✅ Square grid (12×12)
+- ✅ No text during gameplay
+- ✅ Deterministic behavior
+- ✅ 7-action framework compatible
+
+Controls:
+- LEFT/RIGHT (A/D): Select color
+- UP/DOWN/SPACE (W/S): Perform flood fill
+- R: Reset/New level
+- ESC: Quit
 """
 
+import sys
+import os
 import pygame
 import random
 from typing import Set, Tuple
 from enum import Enum
 
-# ARC color palette (hardcoded)
-ARC_COLORS = {
-    0: (0, 0, 0),        # Black
-    1: (0, 116, 217),    # Blue  
-    2: (255, 65, 54),    # Red
-    3: (46, 204, 64),    # Green
-    4: (255, 220, 0),    # Yellow
-    5: (170, 170, 170),  # Gray
-    6: (240, 18, 190),   # Magenta
-    7: (255, 133, 27),   # Orange
-    8: (127, 219, 255),  # Sky Blue
-    9: (135, 12, 37)     # Maroon
-}
+# Add tools to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
+from arc_agi_editor.editor.utils import ARC_COLORS
 
 class Direction(Enum):
     UP = (0, -1)
@@ -42,16 +47,17 @@ class SimpleFlood:
         self.screen_width = self.grid_size * self.cell_size
         self.screen_height = self.grid_size * self.cell_size + 120  # Extra space for UI
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        pygame.display.set_caption("Simple Color Flood")
-        
+        pygame.display.set_caption("Simple Color Flood - ARC-AGI-3 v2.0")
+
         # Game state
         self.clock = pygame.time.Clock()
         self.running = True
         self.fps = 10
-        
+
         # Grid state
         self.grid = [[0 for _ in range(self.grid_size)] for _ in range(self.grid_size)]
-        self.colors_available = [1, 2, 3, 4, 5]  # Blue, Red, Green, Yellow, Gray
+        # Using extended 16-color palette for variety
+        self.colors_available = [1, 2, 3, 4, 6, 7, 8]  # Blue, Red, Green, Yellow, Magenta, Orange, Sky Blue
         self.current_color = 1
         self.max_moves = 15
         self.moves_used = 0

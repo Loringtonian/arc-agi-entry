@@ -1,29 +1,36 @@
-Short version: you can design and submit a game idea for ARC-AGI-3, but there is no public, formal “game-author SDK” or deadline right now. The public SDK and docs are aimed at agents (players), not game authors. The ARC team is actively soliciting game ideas and invites you to pitch them; the current, best-practice path is: share a well-specified proposal + (ideally) a minimal prototype, then contact them via Discord / email / GitHub issues. I’ll give you the exact links and a repo starter so you can set a coding agent loose.
+⚠️ **DISCLAIMER**: This document mixes OFFICIAL sources with SPECULATION about implementation
 
-What exists (official)
-	•	ARC-AGI-3 overview and the explicit “Got Game Ideas?” call for community submissions (design constraints listed). No deadline posted.  ￼
-	•	“Time to build” post: they’re actively building the next wave of environments and invite new game ideas; contact email listed. Still no dates.  ￼
-	•	Docs site (Mintlify) is an Agents Quickstart / API for running agents; useful to mirror the observation/actions interface for your prototype.  ￼
+**For official requirements ONLY**: See `OFFICIAL_REQUIREMENTS.md`
+**Legend**: 🔵 = OFFICIAL | 🟡 = SPECULATION | 🟢 = BEST PRACTICE
+
+---
+
+Short version: you can design and submit a game idea for ARC-AGI-3, but there is no public, formal "game-author SDK" or deadline right now. The public SDK and docs are aimed at agents (players), not game authors. The ARC team is actively soliciting game ideas and invites you to pitch them; the current, best-practice path is: share a well-specified proposal + (ideally) a minimal prototype, then contact them via Discord / email / GitHub issues. I'll give you the exact links and a repo starter so you can set a coding agent loose.
+
+What exists (official) 🔵 **OFFICIAL**
+	•	ARC-AGI-3 overview and the explicit "Got Game Ideas?" call for community submissions (design constraints listed). No deadline posted.  ￼
+	•	"Time to build" post: they're actively building the next wave of environments and invite new game ideas; contact email listed. Still no dates.  ￼
+	•	Docs site (Mintlify) is an Agents Quickstart / API for running agents 🟡 (NOTE: for agent developers, NOT game authors)  ￼
 	•	Official GitHub:
-	•	arcprize/ARC-AGI-3-Agents (reference for the environment/agent interface; latest release v0.9.2 on Aug 19 2025).  ￼
+	•	arcprize/ARC-AGI-3-Agents (reference for the environment/agent interface; latest release v0.9.2 on Aug 19 2025). 🟡 For agents, NOT games  ￼
 	•	arcprize/docs (public docs repo; has contributing guidance).  ￼
 	•	Community touchpoints to route your proposal / questions: Discord (linked from Resources/Guide) and team@arcprize.org.  ￼
 
-What does not exist (publicly)
+What does not exist (publicly) 🔵 **OFFICIAL** (verified absence)
 	•	No published game-authoring SDK, templates, or schema for third-party environment packages.
-	•	No public submission deadline or portal specifically for “submit your environment to be included in ARC-AGI-3.”
+	•	No public submission deadline or portal specifically for "submit your environment to be included in ARC-AGI-3."
 	•	The only dated thing was the Agent Preview Competition (closed Aug 2025) — that was for agents, not game submissions.  ￼
 
-Design constraints you must obey (from ARC page)
+Design constraints you must obey (from ARC page) 🔵 **OFFICIAL**
 	•	Easy for humans (pick up in <1 min; playable in 5–10 min).
 	•	No language/trivia/cultural symbols (focus on core knowledge priors).
 	•	No instructions required; should still be fun for humans; novelty encouraged (hidden state, ToM, long-horizon planning, multi-agent, etc.).  ￼
 
-How to proceed (practical path to a credible submission)
+How to proceed (practical path to a credible submission) 🟡 **SPECULATION** - Suggested approach, NOT official requirements
 
-1) Mirror their interface so your prototype “fits”
+1) Mirror their interface so your prototype "fits" 🟡 **SPECULATION**
 
-Study and clone the Agents repo to mirror the observations/actions contract in your environment prototype (e.g., 64×64 grid, ~16 colours; 6 core actions + “click(x,y)” were used in preview games). This lets you demo your game with existing agents.  ￼
+🟡 **SPECULATION**: Study and clone the Agents repo to mirror the observations/actions contract in your environment prototype (e.g., 64×64 grid, ~16 colours; 7 actions total: ACTION1-7 + RESET in the agent framework). This lets you demo your game with existing agents.  ￼
 
 Key references
 	•	Agents Quickstart + repo: adds/implements agent methods & run loops.  ￼
