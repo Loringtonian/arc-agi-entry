@@ -29,7 +29,8 @@
       "WebFetch(domain:medium.com)",
       "Bash(cat:*)",
       "Read(//Users/lts/Desktop/**)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(./.venv/bin/python:*)"
     ],
     "deny": []
   }
